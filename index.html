@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skybox diego</title>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 45, 30000);
+        camera.position.set(-900,-200,-900);
+
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth,window.innerHeight);
+        document.body.appendChild(renderer.domElement)
+
+
+
+        let materialArray = [];
+        let texture_ft = new THREE.TextureLoader().load( 'CRAZY CUBO.png');
+        let texture_bk = new THREE.TextureLoader().load( 'diegoemo.png');
+        let texture_up = new THREE.TextureLoader().load( 'diegololi.png');
+        let texture_dn = new THREE.TextureLoader().load( 'diegopogger.jpg');
+        let texture_rt = new THREE.TextureLoader().load( 'diegovelho.jpg');
+        let texture_lf = new THREE.TextureLoader().load( 'zagoda.png');
+  
+        materialArray.push(new THREE.MeshBasicMaterial( { map: texture_ft }));
+        materialArray.push(new THREE.MeshBasicMaterial( { map: texture_bk }));
+        materialArray.push(new THREE.MeshBasicMaterial( { map: texture_up }));
+        materialArray.push(new THREE.MeshBasicMaterial( { map: texture_dn }));
+        materialArray.push(new THREE.MeshBasicMaterial( { map: texture_rt }));
+        materialArray.push(new THREE.MeshBasicMaterial( { map: texture_lf }));
+   
+        for (let i = 0; i < 6; i++)
+            materialArray[i].side = THREE.BackSide;
+   
+        let skyboxGeo = new THREE.BoxGeometry( 10000, 10000, 10000);
+        let skybox = new THREE.Mesh( skyboxGeo, materialArray );
+        scene.add( skybox );
+
+
+        var animate = function() {
+            requestAnimationFrame(animate)
+            camera.rotation.z += 0.01
+            camera.rotation.x += 0.02
+            camera.rotation.y += 0.01
+
+
+            renderer.render(scene, camera)
+        }
+
+        animate()
+    </script>
+</body>
+</html>
